@@ -7,8 +7,10 @@ export default function(element, width, height) {
     
     let index = 0;
     for(let i=0; i<childrenElements.length; i++) {
-        childrenElements[i].dataset.slide = index;
-        childrenElements[i].style.display = 'none';
-        index++;
+        if(!childrenElements[i].classList.contains('slidercraft-class')) {
+            childrenElements[i].dataset.slide = index;
+            childrenElements[i].style.display = 'none';
+            index++;
+        }
     }
 }

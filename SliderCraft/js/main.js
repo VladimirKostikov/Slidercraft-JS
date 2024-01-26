@@ -2,6 +2,7 @@ import elementExist from './helpers/elementExist.js';
 import prepareElement from './helpers/prepareElement.js';
 import renderElement from './helpers/renderElement.js';
 import countSlidesInElement from './helpers/countSlidesInElement.js';
+import renderArrows from './helpers/renderArrows.js';
 
 
 class ValidationError extends Error {
@@ -42,6 +43,7 @@ export default class SliderCraft {
             else {
                 prepareElement(this.element, this.options.width, this.options.height);
                 renderElement(this.element, this.options.start);
+                renderArrows(this.element);
 
                 this.play();
             }
@@ -67,7 +69,6 @@ export default class SliderCraft {
                 this.slide = 0;
                 renderElement(this.element, this.slide);
             }
-            console.log(this.slide);
         }, this.options.timer);
     }
 

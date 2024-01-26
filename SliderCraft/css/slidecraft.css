@@ -1,3 +1,28 @@
 .active {
     display: block;
 }
+
+.slidercraft-arrow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+
+    width: 32px;
+    height: 32px;
+    padding: 10px;
+    cursor: pointer;
+    background: #0000007a;
+}
+
+.slidercraft-arrow-left {
+    left: 0px;
+}
+
+.slidercraft-arrow-right {
+    right: 0px;
+}
+
+.slidercraft-arrow:hover {
+    background: #000000ca;
+}
