@@ -1,4 +1,7 @@
 import elementExist from './helpers/elementExist.js';
+import prepareElement from './helpers/prepareElement.js';
+import renderElement from './helpers/renderElement.js';
+import countSlidesInElement from './helpers/countSlidesInElement.js';
 
 
 class ValidationError extends Error {
@@ -9,12 +12,23 @@ class ValidationError extends Error {
 }
 
 export default class SliderCraft {
-    slide = 0;
-    slides;
 
+    options = {
+        width: "520px",
+        height: "280px",
+        start: 0,
+        timer: 3000,
+        arrows: true,
+        menu: true,
+        menuPosition: 'bottom-center',
+        animation: "none"
+    }
+
+    slide = this.options.start;
 
     constructor(element, params) {
         this.element = element;
+        this.slides = countSlidesInElement(this.element);
         this.init();
     }
 
@@ -25,8 +39,12 @@ export default class SliderCraft {
         else {
             if(!elementExist(this.element))
                 throw new ValidationError("Error. Element not exist");
-            else
-                console.log('all good');
+            else {
+                prepareElement(this.element, this.options.width, this.options.height);
+                renderElement(this.element, this.options.start);
+
+                this.play();
+            }
         }
     }
 
@@ -37,5 +55,23 @@ export default class SliderCraft {
 
     previousSlide() {
 
+    }
+
+    play() {
+        setInterval(() => {
+            if(this.slide + 1  != this.slides) {
+                this.slide++;
+                renderElement(this.element, this.slide);
+            }
+            else {
+                this.slide = 0;
+                renderElement(this.element, this.slide);
+            }
+            console.log(this.slide);
+        }, this.options.timer);
+    }
+
+    goSlide(slide) {
+        this.slide = slide;
     }
 }
