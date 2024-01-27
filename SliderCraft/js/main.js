@@ -15,8 +15,8 @@ class ValidationError extends Error {
 export default class SliderCraft {
 
     options = {
-        width: "520px",
-        height: "280px",
+        width: "820px",
+        height: "480px",
         start: 0,
         timer: 3000,
         arrows: true,
@@ -53,29 +53,25 @@ export default class SliderCraft {
 
 
     next() {
-        if(this.slide + 1 != this.slides) {
+        if(this.slide + 1 != this.slides)
             this.slide++;
-            renderElement(this.element, this.slide);
-        }
-        else {
+        else
             this.slide = 0;
-            renderElement(this.element, this.slide);
-        }
+        
+        renderElement(this.element, this.slide);
 
         clearInterval(this.interval);
         this.play();
     }
 
     previous() {
-        if(this.slide - 1 != -1) {
+        if(this.slide - 1 != -1)
             this.slide--;
-            renderElement(this.element, this.slide);
-        }
-        else {
+        else
             this.slide = this.slides - 1;
-            renderElement(this.element, this.slide);
-        }
-        
+
+        renderElement(this.element, this.slide);
+
         clearInterval(this.interval);
         this.play();
     }

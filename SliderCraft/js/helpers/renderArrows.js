@@ -19,13 +19,13 @@ export default async function renderArrows(element, obj) {
 
 
     let arrowLeft = document.getElementById('slidercraft-previous');
-    let arrowLeftFunction = arrowLeft.dataset.function;
+    let arrowLeftFunction = "previous";
     arrowLeft.addEventListener('click', () => {
         obj[arrowLeftFunction]();
     })
 
     let arrowRight = document.getElementById('slidercraft-next');
-    let arrowRightFunction = arrowRight.dataset.function;
+    let arrowRightFunction = "next";
 
     arrowRight.addEventListener('click', () => {
         obj[arrowRightFunction]();
