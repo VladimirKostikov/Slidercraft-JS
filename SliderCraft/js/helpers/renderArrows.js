@@ -1,19 +1,34 @@
-export default function renderArrows(element) {
-    fetch("/SliderCraft/templates/arrowLeft.html")
-    .then((response) => response.text())
-    .then((html) => {
-        document.querySelector(element).innerHTML += html;
-    })
-    .catch((error) => {
-        console.warn(error);
-    });
+export default async function renderArrows(element, obj) {
+    await fetch("/SliderCraft/templates/arrowLeft.html")
+        .then((response) => response.text())
+        .then((html) => {
+            document.querySelector(element).innerHTML += html;
+        })
+        .catch((error) => {
+            console.warn(error);
+        });
 
-    fetch("/SliderCraft/templates/arrowRight.html")
-    .then((response) => response.text())
-    .then((html) => {
-        document.querySelector(element).innerHTML += html;
+    await fetch("/SliderCraft/templates/arrowRight.html")
+        .then((response) => response.text())
+        .then((html) => {
+            document.querySelector(element).innerHTML += html;
+        })
+        .catch((error) => {
+            console.warn(error);
+        });
+
+
+    let arrowLeft = document.getElementById('slidercraft-previous');
+    let arrowLeftFunction = arrowLeft.dataset.function;
+    arrowLeft.addEventListener('click', () => {
+        obj[arrowLeftFunction]();
     })
-    .catch((error) => {
-        console.warn(error);
-    });
+
+    let arrowRight = document.getElementById('slidercraft-next');
+    let arrowRightFunction = arrowRight.dataset.function;
+
+    arrowRight.addEventListener('click', () => {
+        obj[arrowRightFunction]();
+    })
+
 }

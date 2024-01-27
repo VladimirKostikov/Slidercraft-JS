@@ -26,6 +26,7 @@ export default class SliderCraft {
     }
 
     slide = this.options.start;
+    interval;
 
     constructor(element, params) {
         this.element = element;
@@ -43,7 +44,7 @@ export default class SliderCraft {
             else {
                 prepareElement(this.element, this.options.width, this.options.height);
                 renderElement(this.element, this.options.start);
-                renderArrows(this.element);
+                renderArrows(this.element, this);
 
                 this.play();
             }
@@ -51,16 +52,37 @@ export default class SliderCraft {
     }
 
 
-    nextSlide() {
+    next() {
+        if(this.slide + 1 != this.slides) {
+            this.slide++;
+            renderElement(this.element, this.slide);
+        }
+        else {
+            this.slide = 0;
+            renderElement(this.element, this.slide);
+        }
 
+        clearInterval(this.interval);
+        this.play();
     }
 
-    previousSlide() {
-
+    previous() {
+        if(this.slide - 1 != -1) {
+            this.slide--;
+            renderElement(this.element, this.slide);
+        }
+        else {
+            this.slide = this.slides - 1;
+            renderElement(this.element, this.slide);
+        }
+        
+        clearInterval(this.interval);
+        this.play();
     }
+
 
     play() {
-        setInterval(() => {
+        this.interval = setInterval(() => {
             if(this.slide + 1  != this.slides) {
                 this.slide++;
                 renderElement(this.element, this.slide);
