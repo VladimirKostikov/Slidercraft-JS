@@ -1,9 +1,8 @@
-import elementExist from './helpers/elementExist.js';
-import prepareElement from './helpers/prepareElement.js';
-import renderElement from './helpers/renderElement.js';
-import countSlidesInElement from './helpers/countSlidesInElement.js';
-import renderArrows from './helpers/renderArrows.js';
-
+import elementExist from './modules/elementExist.js';
+import prepareElement from './modules/prepareElement.js';
+import renderElement from './modules/renderElement.js';
+import countSlidesInElement from './modules/countSlidesInElement.js';
+import renderArrows from './modules/renderArrows.js';
 
 class ValidationError extends Error {
     constructor(message) {
@@ -29,9 +28,24 @@ export default class SliderCraft {
     interval;
 
     constructor(element, params) {
+        this.consoleInfo();
+
+
         this.element = element;
         this.slides = countSlidesInElement(this.element);
         this.init();
+    }
+
+    consoleInfo() {
+        console.log(
+            "%cSlider%ccraft",
+            "color: #333; font-weight:800; font-size: 14px; background-color: yellow; padding: 5px 10px; border-top-left-radius: 10px; border-bottom-left-radius: 10px",
+            "font-size: 14px; background-color: #333; color: #FFF;padding: 5px 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px"
+        );
+        console.log(
+            "%cMade by Vladimir Kostikov",
+            "font-size: 14px; background-color: #333; color: #FFF;padding: 5px 10px; border-raidus: 10px"
+        );
     }
 
     init() {
@@ -91,6 +105,6 @@ export default class SliderCraft {
     }
 
     goSlide(slide) {
-        this.slide = slide;
+        console.log(slide);
     }
 }
