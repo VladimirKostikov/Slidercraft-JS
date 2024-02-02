@@ -4,6 +4,13 @@ import renderElement from './modules/renderElement.js';
 import countSlidesInElement from './modules/countSlidesInElement.js';
 import renderArrows from './modules/renderArrows.js';
 
+const DEFAULT_WIDTH = "820px";
+const DEFAULT_HEIGHT = "480px";
+const DEFAULT_START = 0;
+const DEFAULT_TIMER = 3000;
+const DEFAULT_ARROWS = true;
+const DEFAULT_AUTOPLAY = true;
+
 class ValidationError extends Error {
     constructor(message) {
       super(message);
@@ -14,27 +21,37 @@ class ValidationError extends Error {
 export default class SliderCraft {
 
     options = {
-        width: "820px",
-        height: "480px",
-        start: 0,
-        timer: 3000,
-        arrows: true,
-        menu: true,
-        menuPosition: 'bottom-center',
-        animation: "none"
+        width: DEFAULT_WIDTH,
+        height: DEFAULT_HEIGHT,
+        start: DEFAULT_START,
+        timer: DEFAULT_TIMER,
+        arrows: DEFAULT_ARROWS,
+        autoPlay: DEFAULT_AUTOPLAY,
     }
-
-    slide = this.options.start;
-    interval;
 
     constructor(element, params) {
         this.consoleInfo();
 
+        if(params) {
+            this.options = {
+                width: params.width ?? DEFAULT_WIDTH,
+                height: params.height ?? DEFAULT_HEIGHT,
+                start: params.start ?? DEFAULT_START,
+                timer: params.timer ?? DEFAULT_TIMER,
+                arrows: params.arrows ?? DEFAULT_ARROWS,
+                autoPlay: params.autoPlay ?? DEFAULT_AUTOPLAY,
+            }
+        }
 
         this.element = element;
         this.slides = countSlidesInElement(this.element);
         this.init();
     }
+
+    slide = this.options.start;
+    interval;
+
+    
 
     consoleInfo() {
         console.log(
@@ -58,9 +75,12 @@ export default class SliderCraft {
             else {
                 prepareElement(this.element, this.options.width, this.options.height);
                 renderElement(this.element, this.options.start);
-                renderArrows(this.element, this);
 
-                this.play();
+                if(this.options.arrows)
+                    renderArrows(this.element, this);
+
+                if(this.options.autoPlay)
+                    this.play();
             }
         }
     }
@@ -75,7 +95,8 @@ export default class SliderCraft {
         renderElement(this.element, this.slide);
 
         clearInterval(this.interval);
-        this.play();
+        if(this.options.autoPlay)
+            this.play();
     }
 
     previous() {
@@ -87,7 +108,8 @@ export default class SliderCraft {
         renderElement(this.element, this.slide);
 
         clearInterval(this.interval);
-        this.play();
+        if(this.options.autoPlay)
+            this.play();
     }
 
 
