@@ -1,3 +1,11 @@
+/**
+ * Module renderElements
+ * Renders slides depending on which slide is current
+ * 
+ * @param {string} element 
+ * @param {int} slide 
+ */
+
 export default function(element, slide) {
     let childrenElements = document.querySelector(element).children;
 

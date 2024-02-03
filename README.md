@@ -103,4 +103,14 @@
 |   arrowLeft               |   Left arrow template  |
 |   arrowRight              |   Right arrow template |
 
-<p></p>
+<hr>
+
+<h2>Class Methods</h2>
+
+|   Name                     |   Action  |
+|   ----                    |   ------  |
+|   init                    |   Slider initialization |
+|   next                    |   Go to next slide |
+|   previous                |   Go to previous slide |
+|   play                    |   Automatic scrolling |
+|   goSlide(slide)          |   Go to the specified slide |

@@ -1,4 +1,13 @@
+/**
+ * Module renderArrows
+ * This module draws slider arrows
+ * 
+ * @param {string} element 
+ * @param {SliderCraftt} obj 
+ */
+
 export default async function renderArrows(element, obj) {
+    // Get the template (arrowLeft)
     await fetch("/templates/arrowLeft.html")
         .then((response) => response.text())
         .then((html) => {
@@ -8,6 +17,8 @@ export default async function renderArrows(element, obj) {
             console.warn(error);
         });
 
+
+    // Get the template (arrowRight)
     await fetch("/templates/arrowRight.html")
         .then((response) => response.text())
         .then((html) => {
@@ -18,6 +29,7 @@ export default async function renderArrows(element, obj) {
         });
 
 
+    // Set events on drawn arrows
     let arrowLeft = document.getElementById('slidercraft-previous');
     let arrowLeftFunction = "previous";
     arrowLeft.addEventListener('click', () => {
