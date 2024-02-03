@@ -1,9 +1,18 @@
+/**
+ * 
+ * Main js file
+ * Must be connected as a module
+ * 
+ */
+
+// Get modules
 import elementExist from './modules/elementExist.js';
 import prepareElement from './modules/prepareElement.js';
 import renderElement from './modules/renderElement.js';
 import countSlidesInElement from './modules/countSlidesInElement.js';
 import renderArrows from './modules/renderArrows.js';
 
+// Standard values ​​for slider parameters
 const DEFAULT_WIDTH = "820px";
 const DEFAULT_HEIGHT = "480px";
 const DEFAULT_START = 0;
@@ -11,6 +20,7 @@ const DEFAULT_TIMER = 3000;
 const DEFAULT_ARROWS = true;
 const DEFAULT_AUTOPLAY = true;
 
+// Class responsible for error output
 class ValidationError extends Error {
     constructor(message) {
       super(message);
@@ -18,8 +28,10 @@ class ValidationError extends Error {
     }
 }
 
+// Main slider class
 export default class SliderCraft {
 
+    // Initializing the array of slider parameters
     options = {
         width: DEFAULT_WIDTH,
         height: DEFAULT_HEIGHT,
@@ -29,9 +41,15 @@ export default class SliderCraft {
         autoPlay: DEFAULT_AUTOPLAY,
     }
 
+    /**
+     * Class constructor
+     * @param {string} element
+     * @param {array} params
+     */
     constructor(element, params) {
         this.consoleInfo();
 
+        // If slider parameters are specified, apply the specified ones
         if(params) {
             this.options = {
                 width: params.width ?? DEFAULT_WIDTH,
@@ -48,7 +66,10 @@ export default class SliderCraft {
         this.init();
     }
 
+    // Opening slide
     slide = this.options.start;
+
+    // Slide scrolling interval
     interval;
 
     
@@ -65,14 +86,19 @@ export default class SliderCraft {
         );
     }
 
+    // Slider initialization
     init() {
+
+        // Is the element specified?
         if(!this.element) {
             throw new ValidationError("Error. Element not specified");
         }
         else {
+            // Does the element exist?
             if(!elementExist(this.element))
                 throw new ValidationError("Error. Element not exist");
             else {
+                // Slider generation
                 prepareElement(this.element, this.options.width, this.options.height);
                 renderElement(this.element, this.options.start);
 
@@ -85,7 +111,7 @@ export default class SliderCraft {
         }
     }
 
-
+    // Show next slide
     next() {
         if(this.slide + 1 != this.slides)
             this.slide++;
@@ -99,6 +125,7 @@ export default class SliderCraft {
             this.play();
     }
 
+    // Show previous slide
     previous() {
         if(this.slide - 1 != -1)
             this.slide--;
@@ -112,7 +139,7 @@ export default class SliderCraft {
             this.play();
     }
 
-
+    // Automatic scrolling slider
     play() {
         this.interval = setInterval(() => {
             if(this.slide + 1  != this.slides) {
@@ -126,7 +153,12 @@ export default class SliderCraft {
         }, this.options.timer);
     }
 
+    // Go to the specified slide
     goSlide(slide) {
-        console.log(slide);
+        this.slide = slide;
+        renderElement(this.element, this.slide);
+        clearInterval(this.interval);
+        if(this.options.autoPlay)
+            this.play();
     }
 }
